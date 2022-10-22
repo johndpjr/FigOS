@@ -27,9 +27,7 @@ step2:
     mov sp, 0x7c00 ; data segment
     ; enable interrupts
     sti
-    ; si is index register
-    mov si, message
-    call print
+
     ; infinite loop- jump to itself (don't want to call below >1 time)
     jmp $
 
@@ -54,8 +52,6 @@ print_char:
     ; int 0x10 (http://www.ctyme.com/intr/rb-0106.htm)
     int 0x10
     ret
-
-message: db 'Hello World!', 0
 
 ; pad first 510 bytes with 0
 times 510-($ - $$) db 0
