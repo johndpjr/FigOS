@@ -28,7 +28,25 @@ step2:
     ; enable interrupts
     sti
 
+    ; Read sectors from memory (http://www.ctyme.com/intr/rb-0607.htm)
+    mov ah, 2 ; read sector command
+    mov al, 1 ; one sector to read
+    mov ch, 0 ; cylinder low eight bits
+    mov cl, 2 ; read sector 2
+    mov dh, 0 ; head number
+    mov bx, buffer
+    int 0x13
+    jc error
+
+    mov si, buffer
+    call print
+
     ; infinite loop- jump to itself (don't want to call below >1 time)
+    jmp $
+
+error:
+    mov si, error_message
+    call print
     jmp $
 
 print:
@@ -53,7 +71,10 @@ print_char:
     int 0x10
     ret
 
+error_message: db 'Failed to load sector', 0
 ; pad first 510 bytes with 0
 times 510-($ - $$) db 0
 ; dw- assemble word (write 2 bytes of boot signature)
 dw 0xaa55 ; little endian (big-endian is 0x55aa)
+
+buffer:
