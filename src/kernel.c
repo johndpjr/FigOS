@@ -51,5 +51,8 @@ void print(const char* str) {
 
 void kernel_main() {
     terminal_initialize();
-    print("Hello, World\n!");
+    print("Hello, World!");
+
+    // Initialize the interrupt descriptor table
+    idt_init();
 }
