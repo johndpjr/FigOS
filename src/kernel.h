@@ -5,6 +5,7 @@
 
 #include "idt/idt.h"
 #include "io/io.h"
+#include "memory/heap/kheap.h"
 
 #define VGA_WIDTH 80
 #define VGA_HEIGHT 20
