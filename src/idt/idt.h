@@ -2,6 +2,11 @@
 #define PEACHOS_IDT_H
 #include <stdint.h>
 
+#include "config.h"
+#include "kernel.h"
+#include "memory/memory.h"
+#include "io/io.h"
+
 struct idt_desc {
     uint16_t offset_1; // Offset bits 0 - 15
     uint16_t selector; // Selector in GDT
