@@ -1,28 +1,30 @@
 #ifndef PEACHOS_HEAP_H
 #define PEACHOS_HEAP_H
-#include <stdint.h>
-#include <stddef.h>
 #include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
 
 #include "config.h"
 #include "kernel.h"
-#include "status.h"
 #include "memory/memory.h"
+#include "status.h"
 
 #define HEAP_BLOCK_TABLE_ENTRY_TAKEN 0x01
-#define HEAP_BLOCK_TABLE_ENTRY_FREE 0x00
+#define HEAP_BLOCK_TABLE_ENTRY_FREE  0x00
 
 #define HEAP_BLOCK_HAS_NEXT 0b10000000
 #define HEAP_BLOCK_IS_FIRST 0b01000000
 
 typedef unsigned char HEAP_BLOCK_TABLE_ENTRY;
 
-struct heap_table {
+struct heap_table
+{
     HEAP_BLOCK_TABLE_ENTRY* entries;
     size_t total;
 };
 
-struct heap {
+struct heap
+{
     struct heap_table* table;
     // Start address of heap data pool
     void* saddr;

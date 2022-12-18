@@ -1,10 +1,10 @@
 #ifndef PEACHOS_KHEAP_H
 #define PEACHOS_KHEAP_H
-#include <stdint.h>
 #include <stddef.h>
+#include <stdint.h>
 
-#include "heap.h"
 #include "config.h"
+#include "heap.h"
 #include "memory/memory.h"
 
 void kheap_init();

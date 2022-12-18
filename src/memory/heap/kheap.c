@@ -3,7 +3,8 @@
 struct heap kernel_heap;
 struct heap_table kernel_heap_table;
 
-void kheap_init() {
+void kheap_init()
+{
     int total_table_entries = PEACHOS_HEAP_SIZE_BYTES / PEACHOS_HEAP_BLOCK_SIZE;
     kernel_heap_table.entries = (HEAP_BLOCK_TABLE_ENTRY*)(PEACHOS_HEAP_TABLE_ADDRESS);
     kernel_heap_table.total = total_table_entries;
@@ -14,11 +15,13 @@ void kheap_init() {
         print("Failed to create heap\n");
 }
 
-void* kmalloc(size_t size) {
+void* kmalloc(size_t size)
+{
     return heap_malloc(&kernel_heap, size);
 }
 
-void* kzalloc(size_t size) {
+void* kzalloc(size_t size)
+{
     void* ptr = kmalloc(size);
     if (!ptr)
         return 0;
@@ -27,6 +30,7 @@ void* kzalloc(size_t size) {
     return ptr;
 }
 
-void kfree(void* ptr) {
+void kfree(void* ptr)
+{
     heap_free(&kernel_heap, ptr);
 }

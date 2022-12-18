@@ -1,7 +1,7 @@
 #ifndef PEACHOS_KERNEL_H
 #define PEACHOS_KERNEL_H
-#include <stdint.h>
 #include <stddef.h>
+#include <stdint.h>
 
 #include "idt/idt.h"
 #include "io/io.h"
