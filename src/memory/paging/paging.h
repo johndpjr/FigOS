@@ -4,9 +4,6 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "status.h"
-#include "memory/heap/kheap.h"
-
 #define PAGING_CACHE_DISABLED  0b00010000
 #define PAGING_WRITE_THROUGH   0b00001000
 #define PAGING_ACCESS_FROM_ALL 0b00000100

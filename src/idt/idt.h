@@ -2,11 +2,6 @@
 #define PEACHOS_IDT_H
 #include <stdint.h>
 
-#include "config.h"
-#include "io/io.h"
-#include "kernel.h"
-#include "memory/memory.h"
-
 struct idt_desc
 {
     uint16_t offset_1; // Offset bits 0 - 15

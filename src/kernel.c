@@ -1,5 +1,12 @@
 #include "kernel.h"
 
+#include "disk/disk.h"
+#include "fs/pparser.h"
+#include "idt/idt.h"
+#include "memory/heap/kheap.h"
+#include "memory/paging/paging.h"
+#include "string/string.h"
+
 uint16_t* video_mem = 0;
 uint16_t terminal_row = 0;
 uint16_t terminal_col = 0;

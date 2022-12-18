@@ -1,5 +1,10 @@
 #include "heap.h"
 
+#include "config.h"
+#include "kernel.h"
+#include "memory/memory.h"
+#include "status.h"
+
 static bool heap_validate_table(void* ptr, void* end, struct heap_table* table)
 {
     int res = 0;

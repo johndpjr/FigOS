@@ -1,11 +1,6 @@
 #ifndef PEACHOS_DISK_H
 #define PEACHOS_DISK_H
 
-#include "config.h"
-#include "io/io.h"
-#include "memory/memory.h"
-#include "status.h"
-
 typedef unsigned int PEACHOS_DISK_TYPE;
 
 // Represents a real physical hard disk

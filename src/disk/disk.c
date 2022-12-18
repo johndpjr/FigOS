@@ -1,5 +1,10 @@
 #include "disk.h"
 
+#include "config.h"
+#include "io/io.h"
+#include "memory/memory.h"
+#include "status.h"
+
 struct disk disk;
 
 int disk_read_sector(int lba, int total, void* buf)

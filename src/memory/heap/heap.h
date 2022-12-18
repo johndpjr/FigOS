@@ -4,11 +4,6 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "config.h"
-#include "kernel.h"
-#include "memory/memory.h"
-#include "status.h"
-
 #define HEAP_BLOCK_TABLE_ENTRY_TAKEN 0x01
 #define HEAP_BLOCK_TABLE_ENTRY_FREE  0x00
 
