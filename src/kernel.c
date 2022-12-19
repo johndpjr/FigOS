@@ -1,7 +1,7 @@
 #include "kernel.h"
 
 #include "disk/disk.h"
-#include "disk/streamer.h"
+#include "fs/file.h"
 #include "idt/idt.h"
 #include "memory/heap/kheap.h"
 #include "memory/paging/paging.h"
@@ -62,6 +62,9 @@ void kernel_main()
 
     // Initialize the heap
     kheap_init();
+
+    // Initialize filesystems
+    fs_init();
 
     // Search and initialize disk
     disk_search_and_init();
