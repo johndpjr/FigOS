@@ -1,8 +1,11 @@
 #include "kernel.h"
 
+#include "config.h"
 #include "disk/disk.h"
 #include "fs/file.h"
+#include "gdt/gdt.h"
 #include "idt/idt.h"
+#include "memory/memory.h"
 #include "memory/heap/kheap.h"
 #include "memory/paging/paging.h"
 #include "string/string.h"
@@ -62,10 +65,23 @@ void panic(const char* msg)
     while (1) {}
 }
 
+struct gdt gdt_real[PEACHOS_TOTAL_GDT_SEGMENTS];
+struct gdt_structured gdt_structured[PEACHOS_TOTAL_GDT_SEGMENTS] = {
+        { .base = 0x00, .limit = 0x00,       .type = 0x00 },  // NULL Segment
+        { .base = 0x00, .limit = 0xFFFFFFFF, .type = 0x9A },  // Kernel Code Segment
+        { .base = 0x00, .limit = 0xFFFFFFFF, .type = 0x92 },  // Kernel Data Segment
+};
+
 void kernel_main()
 {
     terminal_initialize();
     print("Hello, World!\n");
+
+    memset(gdt_real, 0x00, sizeof(gdt_real));
+    gdt_structured_to_gdt(gdt_real, gdt_structured, PEACHOS_TOTAL_GDT_SEGMENTS);
+
+    // Load the GDT
+    gdt_load(gdt_real, sizeof(gdt_real));
 
     // Initialize the heap
     kheap_init();
@@ -90,14 +106,4 @@ void kernel_main()
 
     // Enable the system interrupts
     enable_interrupts();
-
-    int fd = fopen("0:/hello.txt", "r");
-    if (fd) {
-        struct file_stat s;
-        fstat(fd, &s);
-        fclose(fd);
-
-        print("testing\n");
-    }
-    while (1) {}
 }
