@@ -35,6 +35,18 @@ uint32_t* paging_4gb_chunk_get_directory(struct paging_4gb_chunk* chunk)
     return chunk->directory_entry;
 }
 
+void paging_free_4gb(struct paging_4gb_chunk* chunk)
+{
+    for (int i = 0; i < 1024; ++i) {
+        uint32_t entry = chunk->directory_entry[i];
+        uint32_t* table = (uint32_t*)(entry & 0xFFFFF000);
+        kfree(table);
+    }
+
+    kfree(chunk->directory_entry);
+    kfree(chunk);
+}
+
 bool paging_is_aligned(void* addr)
 {
     return ((uint32_t)addr % PAGING_PAGE_SIZE) == 0;
