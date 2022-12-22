@@ -8,8 +8,11 @@
 #include "memory/memory.h"
 #include "memory/heap/kheap.h"
 #include "memory/paging/paging.h"
+#include "status.h"
 #include "string/string.h"
+#include "task/process.h"
 #include "task/tss.h"
+#include "task/task.h"
 
 uint16_t* video_mem = 0;
 uint16_t terminal_row = 0;
@@ -117,6 +120,12 @@ void kernel_main()
     // Enable paging
     enable_paging();
 
-    // Enable the system interrupts
-    enable_interrupts();
+    struct process* process = 0;
+    int res = process_load("0:/blank.bin", &process);
+    if (res != PEACHOS_ALL_OK)
+        panic("Cannot load blank.bin\n");
+    
+    task_run_first_ever_task();
+
+    while (1) {}
 }
