@@ -10,7 +10,9 @@
 
 void kernel_main();
 void panic(const char* msg);
+void terminal_writechar(char c, char color);
 void print(const char* str);
+
 void kernel_page();
 void kernel_registers();
 
