@@ -54,10 +54,12 @@ void keyboard_push(char c)
     if (!process)
         return;
     
+    if (c == 0x00)
+        return;  // null characters not pushed
+    
     int real_index = keyboard_get_tail_index(process);
     process->keyboard.buffer[real_index] = c;
     ++process->keyboard.tail;
-
 }
 
 char keyboard_pop()

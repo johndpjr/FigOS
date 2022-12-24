@@ -138,8 +138,6 @@ void kernel_main()
     if (res != PEACHOS_ALL_OK)
         panic("Cannot load blank.bin\n");
     
-    keyboard_push('A');
-    
     task_run_first_ever_task();
 
     while (1) {}
