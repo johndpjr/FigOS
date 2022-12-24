@@ -3,13 +3,14 @@ section .asm
 extern int21h_handler
 extern no_interrupt_handler
 extern isr80h_handler
+extern interrupt_handler
 
 global idt_load
-global int21h
 global no_interrupt
 global enable_interrupts
 global disable_interrupts
 global isr80h_wrapper
+global interrupt_pointer_table
 
 enable_interrupts:
     sti
@@ -28,18 +29,40 @@ idt_load:
     pop ebp
     ret
 
-int21h:
-    ; interrupt does not change state, so push all registers
-    pushad
-    call int21h_handler
-    popad
-    iret
-
 no_interrupt:
     pushad
     call no_interrupt_handler
     popad
     iret
+
+%macro interrupt 1
+    global int%1
+    int%1:
+        ; Interrupt frame start
+        ; Already pushed to us by the processor upon entry to this interrupt:
+        ; uint32_t ip
+        ; uint32_t cs
+        ; uint32_t flags
+        ; uint32_t sp;
+        ; uint32_t ss;
+        ; Push general-purpose registers to stack
+        pushad
+        ; Interrupt frame ends
+        
+        ; Push stack ptr so that we point to interrupt frame ^
+        push esp
+        push dword %1
+        call interrupt_handler
+        add esp, 8
+        popad
+        iret
+%endmacro
+
+%assign i 0
+%rep 512
+    interrupt i
+%assign i i+1
+%endrep
 
 isr80h_wrapper:
     ; Interrupt frame start
@@ -70,3 +93,14 @@ isr80h_wrapper:
 section .data
 ; Stores return result from isr80h_handler
 tmp_res: dd 0
+
+%macro interrupt_array_entry 1
+    dd int%1
+%endmacro
+
+interrupt_pointer_table:
+%assign i 0
+%rep 512
+    interrupt_array_entry i
+%assign i i+1
+%endrep
