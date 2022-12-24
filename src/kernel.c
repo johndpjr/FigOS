@@ -30,11 +30,31 @@ void terminal_putchar(int x, int y, char c, char color)
     video_mem[y * VGA_WIDTH + x] = terminal_make_char(c, color);
 }
 
+void terminal_backspace()
+{
+    if (terminal_row == 0 && terminal_col == 0)
+        return;
+    
+    if (terminal_col == 0) {
+        --terminal_row;
+        terminal_col = VGA_WIDTH;
+    }
+
+    --terminal_col;
+    terminal_writechar(' ', 15);
+    --terminal_col;
+}
+
 void terminal_writechar(char c, char color)
 {
     if (c == '\n') {
         terminal_col = 0;
         ++terminal_row;
+        return;
+    }
+
+    if (c == 0x08) {
+        terminal_backspace();
         return;
     }
 
