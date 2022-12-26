@@ -10,7 +10,7 @@
 #include "status.h"
 #include "string/string.h"
 
-const char* elf_signature[] = {0x7F, 'E', 'L', 'F'};
+const char elf_signature[] = {0x7F, 'E', 'L', 'F'};
 
 static bool elf_valid_signature(void* buffer)
 {
@@ -103,7 +103,7 @@ int elf_validate_loaded(struct elf_header* header)
         && elf_valid_class(header)
         && elf_valid_encoding(header)
         && elf_has_program_header(header)
-    ) ? PEACHOS_ALL_OK : -EINVARG;
+    ) ? PEACHOS_ALL_OK : -EINFORMAT;
 }
 
 int elf_process_phdr_pt_load(struct elf_file* elf_file, struct elf32_phdr* phdr)
@@ -127,9 +127,10 @@ int elf_process_pheader(struct elf_file* elf_file, struct elf32_phdr* phdr)
     int res = 0;
     switch (phdr->p_type) {
         case PT_LOAD:
-            res = elf_process_pt_load(elf_file, phdr);
+            res = elf_process_phdr_pt_load(elf_file, phdr);
             break;
     }
+    return res;
 }
 
 int elf_process_pheaders(struct elf_file* elf_file)
@@ -173,7 +174,7 @@ int elf_load(const char* filename, struct elf_file** file_out)
     fd = res;
     struct file_stat stat;
     res = fstat(fd, &stat);
-    if (res <= 0)
+    if (res < 0)
         goto out;
 
     elf_file->elf_memory = kzalloc(stat.filesize);

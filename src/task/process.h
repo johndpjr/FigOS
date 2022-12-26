@@ -5,6 +5,11 @@
 #include "config.h"
 #include "task.h"
 
+#define PROCESS_FILETYPE_ELF 0
+#define PROCESS_FILETYPE_BINARY 1
+
+typedef unsigned char PROCESS_FILETYPE;
+
 struct process
 {
     // The process id
@@ -19,8 +24,13 @@ struct process
     // This ensures all memory is freed after the process exits
     void* allocations[PEACHOS_MAX_PROGRAM_ALLOCATIONS];
 
-    // The physical pointer to the process memory
-    void* ptr;
+    PROCESS_FILETYPE filetype;
+
+    union {
+        // The physical pointer to the process memory
+        void* ptr;
+        struct elf_file* elf_file;
+    };
 
     // The physical pointer to the stack memory
     void* stack;
