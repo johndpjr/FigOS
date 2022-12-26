@@ -22,5 +22,7 @@ struct elf_file
     void* physical_end_address;
 };
 
+int elf_load(const char* filename, struct elf_file** file_out);
+void elf_close(struct elf_file* file);
 
 #endif //PEACHOS_ELFLOADER_H
