@@ -1,5 +1,5 @@
-#ifndef STRING_H
-#define STRING_H
+#ifndef PEACHOS_STRING_H
+#define PEACHOS_STRING_H
 #include <stdbool.h>
 
 char tolower(char s1);
@@ -12,5 +12,6 @@ int strncmp(const char* str1, const char* str2, int n);
 int strnlen_terminator(const char* str, int max, char terminator);
 bool isdigit(char c);
 int tonumericdigit(char c);
+char* strtok(char* str, const char* delimeters);
 
-#endif //STRING_H
+#endif // PEACHOS_STRING_H
