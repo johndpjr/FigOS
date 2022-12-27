@@ -4,6 +4,7 @@ section .asm
 
 global print:function
 global getkey:function
+global peachos_putchar:function
 global peachos_malloc:function
 global peachos_free:function
 
@@ -24,6 +25,17 @@ getkey:
     mov ebp, esp
     mov eax, 2 ; command getkey
     int 0x80
+    pop ebp
+    ret
+
+; void putchar(char c)
+peachos_putchar:
+    push ebp
+    mov ebp, esp
+    mov eax, 3 ; command putchar
+    push dword[ebp+8] ; variable "c"
+    int 0x80
+    add esp, 4
     pop ebp
     ret
 

@@ -4,6 +4,7 @@
 
 void print(const char* message);
 int getkey();
+void peachos_putchar(char c);
 void* peachos_malloc(size_t size);
 void peachos_free(void* ptr);
 
