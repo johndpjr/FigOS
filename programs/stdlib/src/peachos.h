@@ -3,6 +3,14 @@
 #include <stdbool.h>
 #include <stddef.h>
 
+struct command_argument
+{
+    char argument[512];
+    struct command_argument* next;
+};
+
+struct command_argument* peachos_parse_command(const char* command, int max);
+
 void print(const char* message);
 int peachos_getkey();
 int peachos_getkeyblock();
