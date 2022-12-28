@@ -28,5 +28,6 @@ void* peachos_process_load_start(const char* filename);
 int peachos_system(struct command_argument* arguments);
 int peachos_system_run(const char* command);
 void peachos_process_get_arguments(struct process_arguments* arguments);
+void peachos_exit();
 
 #endif //PEACHOS_PEACHOS_H
