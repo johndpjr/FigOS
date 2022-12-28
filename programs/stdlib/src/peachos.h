@@ -25,6 +25,8 @@ void peachos_putchar(char c);
 void* peachos_malloc(size_t size);
 void peachos_free(void* ptr);
 void* peachos_process_load_start(const char* filename);
-; void peachos_process_get_arguments(struct process_arguments* arguments);
+int peachos_system(struct command_argument* arguments);
+int peachos_system_run(const char* command);
+void peachos_process_get_arguments(struct process_arguments* arguments);
 
 #endif //PEACHOS_PEACHOS_H
